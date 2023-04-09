@@ -67,4 +67,48 @@ return require('packer').startup(function(use)
     config = function() require("nvim-autopairs").setup {}
     end
   }
+
+  -- Surround
+  use({
+    "kylechui/nvim-surround",
+    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+    config = function()
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
+    end
+  })
+  -- Devicons
+  use( 'nvim-tree/nvim-web-devicons' )
+
+  -- Mini
+  -- mini-align
+  use { 'echasnovski/mini.align', branch = 'stable' }
+  -- mini-bracketed
+  use { 'echasnovski/mini.bracketed', branch = 'stable' }
+  -- mini-move
+  use { 'echasnovski/mini.move', branch = 'stable' }
+
+  -- Comment
+  use {
+    'numToStr/Comment.nvim',
+    config = function()
+      require('Comment').setup()
+    end
+  }
+
+  -- Dashboard
+  use {
+    'glepnir/dashboard-nvim',
+    event = 'VimEnter',
+    config = function()
+      require('dashboard').setup {
+        -- Config here
+      }
+    end,
+    require = {'nvim-tree/nvim-web-devicons'}
+  }
+
+  -- Peek (markdown viewer)
+  use({ 'toppair/peek.nvim', run = 'deno task --quiet build:fast' })
 end)

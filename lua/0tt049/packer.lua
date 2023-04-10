@@ -1,11 +1,16 @@
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 
+
 -- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
+
+  -- Color Theme
+  use({ 'ellisonleao/gruvbox.nvim', as = 'gruvbox' })
+  vim.cmd('colorscheme gruvbox')
 
   -- Telescope
   use {
@@ -15,10 +20,6 @@ return require('packer').startup(function(use)
     -- branch = '0.1.x',
     requires = { {'nvim-lua/plenary.nvim'} }
   }
-
-  -- Color Theme
-  use({ 'ellisonleao/gruvbox.nvim', as = 'gruvbox' })
-  vim.cmd('colorscheme gruvbox')
 
   -- Treesitter
   use( 'nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
@@ -111,4 +112,24 @@ return require('packer').startup(function(use)
 
   -- Peek (markdown viewer)
   use({ 'toppair/peek.nvim', run = 'deno task --quiet build:fast' })
+
+  -- NvimTree
+  use {
+    'nvim-tree/nvim-tree.lua',
+    requires = {
+      'nvim-tree/nvim-web-devicons', -- optional
+    },
+  }
+
+  -- Gitsigns
+  use {
+    'lewis6991/gitsigns.nvim',
+    config = function()
+      require('gitsigns').setup()
+    end
+  }
+
+  -- Bufferline
+  use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons'}
+
 end)

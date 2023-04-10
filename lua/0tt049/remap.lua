@@ -1,5 +1,5 @@
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>;", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>;", vim.cmd.NvimTreeToggle)
 
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")

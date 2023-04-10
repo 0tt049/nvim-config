@@ -23,7 +23,11 @@ vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
 vim.updatetime = 50
-vim.opt.colorcolumn = "80"
 
-vim.g.mapleader = " "
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+vim.opt.cursorcolumn = false
+vim.opt.cursorline = true
+vim.opt.numberwidth = 4
 

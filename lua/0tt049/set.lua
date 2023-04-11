@@ -31,3 +31,4 @@ vim.opt.cursorcolumn = false
 vim.opt.cursorline = true
 vim.opt.numberwidth = 4
 
+vim.g.loaded_perl_provider = 0

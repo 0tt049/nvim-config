@@ -47,7 +47,6 @@ require'jabs'.setup{
   },
 
   keymap = {
-    Open = "<space>o",
     close = "<c-d>",
     jump = "<space>",
     h_split = "h",

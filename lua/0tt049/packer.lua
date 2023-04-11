@@ -1,6 +1,5 @@
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 
-
 -- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
 
@@ -8,9 +7,13 @@ return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
-  -- Color Theme
-  use({ 'ellisonleao/gruvbox.nvim', as = 'gruvbox' })
-  vim.cmd('colorscheme gruvbox')
+  use {
+    "williamboman/mason.nvim",
+    run = ":MasonUpdate", -- :MasonUpdate updates registry contents
+    "williamboman/mason-lspconfig.nvim",
+    "neovim/nvim-lspconfig",
+  }
+
 
   -- Telescope
   use {
@@ -21,8 +24,32 @@ return require('packer').startup(function(use)
     requires = { {'nvim-lua/plenary.nvim'} }
   }
 
+  -- Neoclip
+  use {
+    "AckslD/nvim-neoclip.lua",
+    requires = {
+      {'kkharji/sqlite.lua', module = 'sqlite'},
+      -- you'll need at least one of these
+      -- {'nvim-telescope/telescope.nvim'},
+      -- {'ibhagwan/fzf-lua'},
+    },
+    config = function()
+      require('neoclip').setup()
+    end,
+  }
+
+  -- Color Theme
+  use({ 'ellisonleao/gruvbox.nvim', as = 'gruvbox' })
+  vim.cmd('colorscheme gruvbox')
+
   -- Treesitter
-  use( 'nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = function()
+      local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+      ts_update()
+    end,
+  }
   use( 'nvim-treesitter/playground' )
 
   -- Harpoon
@@ -33,34 +60,6 @@ return require('packer').startup(function(use)
 
   -- Fugitive
   use( 'tpope/vim-fugitive')
-
-  -- LSP-zero
-  use {
-    'VonHeikemen/lsp-zero.nvim',
-    branch = 'v2.x',
-    requires = {
-      -- LSP Support
-      {'neovim/nvim-lspconfig'},
-      {
-        'williamboman/mason.nvim',
-        run = function() pcall(vim.cmd, 'MasonUpdate')
-        end,
-      },
-      {'williamboman/mason-lspconfig.nvim'},
-
-      -- Autocompletion
-      {'hrsh7th/nvim-cmp'},
-      {'hrsh7th/cmp-nvim-lsp'},
-      {'hrsh7th/cmp-path'},
-      {'saadparwaiz1/cmp_luasnip'},
-      {'hrsh7th/cmp-nvim-lsp'},
-      {'hrsh7th/cmp-nvim-lua'},
-
-      -- Snippets
-      {'L3MON4D3/LuaSnip'},
-      {'rafamadriz/friendly-snippets'},
-    }
-  }
 
   -- Autopairs
   use {
@@ -79,6 +78,7 @@ return require('packer').startup(function(use)
       })
     end
   })
+
   -- Devicons
   use( 'nvim-tree/nvim-web-devicons' )
 
@@ -121,14 +121,6 @@ return require('packer').startup(function(use)
     },
   }
 
-  -- Gitsigns
-  use {
-    'lewis6991/gitsigns.nvim',
-    config = function()
-      require('gitsigns').setup()
-    end
-  }
-
   -- Lualine
   use {
     'nvim-lualine/lualine.nvim',
@@ -137,5 +129,28 @@ return require('packer').startup(function(use)
 
   -- JABS
   use 'matbme/JABS.nvim'
+
+  -- Whick-key
+  use {
+    "folke/which-key.nvim",
+    config = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+      require("which-key").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  }
+
+  -- Org-mode
+  use {'nvim-orgmode/orgmode', config = function()
+    require('orgmode').setup({
+      org_agenda_files = {'~/Notes/**/*'},
+      org_default_notes_file = {'~/Notes/org/refile.org'}
+    })
+  end
+}
 
 end)
